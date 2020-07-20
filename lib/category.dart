@@ -11,7 +11,7 @@ final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 ///
 /// The widget is composed on an [Icon] and [Text]. Tapping on the widget shows
 /// a colored [InkWell] animation.
-class Category extends StatelessWidget {
+class Category {
   /// Creates a [Category].
   ///
   /// A [Category] saves the name of the Category (e.g. 'Length'), its color for
@@ -38,12 +38,12 @@ class Category extends StatelessWidget {
   })  : assert(name != null),
         assert(color != null),
         assert(iconLocation != null),
-        assert(units != null),
-        super(key: key);
+        assert(units != null);
 
   /// Builds a custom widget that shows [Category] information.
   ///
   /// This information includes the icon, name, and color for the [Category].
+  /*
   @override
   // This `context` parameter describes the location of this widget in the
   // widget tree. It can be used for obtaining Theme data from the nearest
@@ -115,5 +115,5 @@ class Category extends StatelessWidget {
   }
 
 
-
+  */
 }

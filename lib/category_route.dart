@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:category_widget_x/category.dart';
 import 'package:category_widget_x/unit.dart';
+import 'package:category_widget_x/category_tile.dart';
+import 'package:category_widget_x/unit_converter.dart';
+import 'package:category_widget_x/backdrop.dart';
 
 final _backgroundColor = Colors.green[100];
 
@@ -21,6 +24,9 @@ class CategoryRoute extends StatefulWidget {
 }
 
 class _CategoryRouteState  extends State<CategoryRoute> {
+  Category _defaultCategory;
+  Category _currentCategory;
+
   final _categories = <Category>[];
 
   static const _categoryNames = <String>[
@@ -74,12 +80,16 @@ class _CategoryRouteState  extends State<CategoryRoute> {
   void initState() {
     super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      _categories.add(Category(
+      var category = Category(
         name: _categoryNames[i],
         color: _baseColors[i],
         iconLocation: Icons.cake,
         units: _retrieveUnitList(_categoryNames[i]),
-      ));
+      );
+      if (i == 0) {
+        _defaultCategory = category;
+      }
+      _categories.add(category);
     }
   }
 
@@ -88,9 +98,20 @@ class _CategoryRouteState  extends State<CategoryRoute> {
   /// For portrait, we construct a [ListView] from the list of category widgets.
   Widget _buildCategoryWidgets() {
     return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => _categories[index],
+      itemBuilder: (BuildContext context, int index) {
+        return CategoryTile(
+          category: _categories[index],
+          onTap: _onCategoryTap,
+        );
+      },
       itemCount: _categories.length,
     );
+  }
+
+  void _onCategoryTap(Category category) {
+    setState(() {
+      _currentCategory = category;
+    });
   }
 
 
@@ -124,13 +145,33 @@ class _CategoryRouteState  extends State<CategoryRoute> {
   Widget build(BuildContext context) {
 
 
-    final listView = Container(
+    /*final listView = Container(
       color: _backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: _buildCategoryWidgets(),
+    );*/
+
+    final listView = Padding(
+      padding: EdgeInsets.only(
+        left: 8.0,
+        right: 8.0,
+        bottom: 48.0,
+      ),
+      child: _buildCategoryWidgets(),
     );
 
-    final appBar = AppBar(
+    return Backdrop(
+      currentCategory:
+      _currentCategory == null ? _defaultCategory : _currentCategory,
+      frontPanel: _currentCategory == null
+          ? SingleChildScrollView( child: UnitConverter(category: _defaultCategory))
+          :SingleChildScrollView(child: UnitConverter(category: _currentCategory)),
+      backPanel: listView,
+      frontTitle: Text('Unit Converter'),
+      backTitle: Text('Select a Category'),
+    );
+
+    /*final appBar = AppBar(
       elevation: 0.0,
       title: Text(
         'Unit Converter',
@@ -146,6 +187,6 @@ class _CategoryRouteState  extends State<CategoryRoute> {
     return Scaffold(
       appBar: appBar,
       body: listView,
-    );
+    );*/
   }
 }

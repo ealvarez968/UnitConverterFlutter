@@ -57,11 +57,12 @@ class Category extends StatelessWidget {
         height: _rowHeight,
           child: InkWell(
             borderRadius: _borderRadius,
+            highlightColor:  color['highlight'],
+            splashColor:  color['splash'],
             onTap: () {
               _navigateToConverter(context);
             },
-            highlightColor: color,
-            splashColor: color,
+
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Row(
@@ -78,7 +79,7 @@ class Category extends StatelessWidget {
                       child: Text(
                           name,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline6
+                          style: Theme.of(context).textTheme.headline5
                       )
                   )
                 ],
@@ -98,7 +99,7 @@ class Category extends StatelessWidget {
             elevation: 1.0,
             title: Text(
               name,
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline4,
             ),
             centerTitle: true,
             backgroundColor: color,
@@ -107,6 +108,7 @@ class Category extends StatelessWidget {
             color: color,
             units: units,
           ),
+          resizeToAvoidBottomPadding: false,
         );
       },
     ));

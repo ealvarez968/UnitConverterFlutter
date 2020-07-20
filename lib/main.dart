@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:category_widget_x/category.dart';
 import 'package:category_widget_x/category_route.dart';
 
-const _categoryName = 'Cake';
-const _categoryIcon = Icons.cake;
-const _categoryColor = Colors.green;
+
 
 void main() {
   runApp(MyApp());
@@ -17,6 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       title: 'Unit Converter',
+      theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: Colors.black,
+          displayColor: Colors.grey[600],
+        ),
+        // This colors the [InputOutlineBorder] when it is selected
+        primaryColor: Colors.grey[500],
+        textSelectionHandleColor: Colors.green[500],
+      ),
       home: CategoryRoute(),
       /*home:  Scaffold(
         backgroundColor: Colors.green[100],
